@@ -1,24 +1,42 @@
 def sequencia_valida(frase, dic):
     for i in frase:
-        if (i == '(' and not dic['parenteses']):
-            dic['parenteses'] = True
-        elif (i == ')' and dic['parenteses']):
-            dic['parenteses'] = False
-        elif (i == '[' and not dic['colchetes']):
-            dic['colchetes'] = True
-        elif (i == ']' and dic['colchetes']):
-            dic['colchetes'] = False
-        elif (i == '{' and not dic['chaves']):
-            dic['chaves'] = True
-        elif (i == '}' and dic['chaves']):
-            dic['chaves'] = False
+        if (i == '('):
+            dic['parenteses'] += 1
+
+        elif (i == ')' and dic['parenteses'] > 0):
+            dic['parenteses'] -= 1
+        
+        elif (i == ')' and dic['parenteses'] < 1):
+            dic['parenteses'] = None
+            break
+        
+        elif (i == '[' and dic['parenteses'] < 1):
+            dic['colchetes'] += 1
+        
+        elif (i == ']' and dic['colchetes'] > 0 and dic['parenteses'] < 1):
+            dic['colchetes'] -= 1 
+        
+        elif (i == ']' and dic['colchetes'] < 1):
+            dic['colchetes'] = None
+            break
+        
+        elif (i == '{' and dic['parenteses'] < 1 and dic['colchetes'] < 1):
+            dic['chaves'] += 1
+        
+        elif (i == '}' and dic['chaves'] > 0 and dic['parenteses'] < 1 and dic['colchetes'] < 1):
+            dic['chaves'] -= 1 
+        
+        elif (i == '}' and dic['chaves'] < 1):
+            dic['chaves'] = None
+            break
+        
         else:
             break
             
 frase = input("digite uma sring de brackets: ")
-d = {"parenteses":False, "colchetes": False, "chaves":False}
+d = {"parenteses":0, "colchetes": 0, "chaves":0}
 sequencia_valida(frase, d)
-if (not d['parenteses'] and not d['colchetes'] and not d['chaves']):
+if (d['parenteses'] == 0 and d['colchetes'] == 0 and d['chaves'] == 0):
     print("sequencia válida")
 else:
     print('sequencia inválida')
