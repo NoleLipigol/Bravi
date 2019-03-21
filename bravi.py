@@ -21,4 +21,4 @@ sequencia_valida(frase, d)
 if (not d['parenteses'] and not d['colchetes'] and not d['chaves']):
     print("sequencia válida")
 else:
-    print('sequencia inválida')
+    print('sequencia inválida ')
